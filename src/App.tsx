@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Features from './components/Features';
 import Services from './components/Services';
 import Gallery from './components/Gallery';
 import BookingForm from './components/BookingForm';
@@ -25,6 +26,7 @@ function HomePage() {
   return (
     <>
       <Hero />
+      <Features />
       <Services />
       <Gallery />
       <BookingForm />
