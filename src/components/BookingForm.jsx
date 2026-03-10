@@ -1,27 +1,39 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { business } from '../config/business';
+import { businessInfo } from '../config/businessInfo';
 import { supabase } from '../lib/supabaseClient';
 import AnimatedSection from './AnimatedSection';
 
 export default function BookingForm() {
   const [formData, setFormData] = useState({
     name: '',
-    phone: '',
-    service: business.services[0]?.name || '',
+    phone: '+91 ',
+    service: businessInfo.services[0]?.name || '',
     appointment_date: '',
     appointment_time: '',
   });
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const whatsappUrl = `https://wa.me/${businessInfo.social.whatsapp.replace(/[^0-9]/g, '')}`;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name === 'phone') {
+      let input = value;
+      if (!input.startsWith('+91')) {
+        input = '+91' + input;
+      }
+      let afterPrefix = input.slice(3);
+      let digits = afterPrefix.replace(/\D/g, '').slice(0, 10);
+      let formatted = '+91';
+      if (digits.length > 0) formatted += ' ' + digits.slice(0, 5);
+      if (digits.length > 5) formatted += ' ' + digits.slice(5);
+
+      setFormData((prev) => ({ ...prev, [name]: formatted }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
     setMessage({ type: '', text: '' });
   };
 
@@ -31,15 +43,15 @@ export default function BookingForm() {
 
     const { name, phone, service, appointment_date, appointment_time } = formData;
 
-    if (!name || !phone || !service || !appointment_date || !appointment_time) {
+    if (!name || !phone || phone.trim() === '+91' || !service || !appointment_date || !appointment_time) {
       setMessage({ type: 'error', text: 'Please fill in all fields' });
       setLoading(false);
       return;
     }
 
-    const phoneRegex = /^\+?1?\d{9,15}$/;
-    if (!phoneRegex.test(phone.replace(/[\s\-()]/g, ''))) {
-      setMessage({ type: 'error', text: 'Please enter a valid phone number' });
+    const phoneRegex = /^\+91 [6-9]\d{4} \d{5}$/;
+    if (!phoneRegex.test(phone)) {
+      setMessage({ type: 'error', text: 'Please enter a valid Indian mobile number' });
       setLoading(false);
       return;
     }
@@ -73,12 +85,12 @@ export default function BookingForm() {
         type: 'success',
         text: 'Booking confirmed! We will contact you soon to confirm your appointment.',
       });
-      
+
       // Reset form
       setFormData({
         name: '',
-        phone: '',
-        service: business.services[0]?.name || '',
+        phone: '+91 ',
+        service: businessInfo.services[0]?.name || '',
         appointment_date: '',
         appointment_time: '',
       });
@@ -87,15 +99,15 @@ export default function BookingForm() {
       setTimeout(() => setMessage({ type: '', text: '' }), 5000);
     } catch (error) {
       console.error('[v0] Booking error:', error);
-      
+
       let errorMessage = 'Failed to book appointment. Please try again or call us directly.';
-      
+
       if (error?.message?.includes('not configured')) {
         errorMessage = 'Booking system is not available. Please call us to book your appointment.';
       } else if (error?.message) {
         errorMessage = `Error: ${error.message}`;
       }
-      
+
       setMessage({
         type: 'error',
         text: errorMessage,
@@ -128,11 +140,10 @@ export default function BookingForm() {
           className="bg-dark-bg border border-foreground/10 rounded-lg shadow-lg p-10">
           {message.text && (
             <div
-              className={`mb-6 p-4 rounded-sm ${
-                message.type === 'success'
+              className={`mb-6 p-4 rounded-sm ${message.type === 'success'
                   ? 'bg-green-100 text-green-800 border border-green-300'
                   : 'bg-red-100 text-red-800 border border-red-300'
-              }`}
+                }`}
             >
               {message.text}
             </div>
@@ -163,7 +174,7 @@ export default function BookingForm() {
                 value={formData.phone}
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-foreground/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent bg-dark-bg text-foreground placeholder:text-foreground/40"
-                placeholder="(555) 123-4567"
+                placeholder="+91 98765 43210"
               />
             </div>
 
@@ -177,7 +188,7 @@ export default function BookingForm() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-foreground/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent bg-dark-bg text-foreground"
               >
-                {business.services.map((service) => (
+                {businessInfo.services.map((service) => (
                   <option key={service.name} value={service.name}>
                     {service.name} ({service.price})
                   </option>
@@ -229,13 +240,13 @@ export default function BookingForm() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href={`tel:${business.phone}`}
+                href={`tel:${businessInfo.contact.phone}`}
                 className="px-6 py-2.5 bg-foreground/10 text-white hover:bg-foreground/20 hover:text-white rounded-lg transition-all font-medium text-center text-sm border border-foreground/20"
               >
                 Call Us
               </a>
               <a
-                href={business.socialLinks.whatsapp}
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white hover:text-white rounded-lg transition-all font-medium text-center text-sm shadow-md"

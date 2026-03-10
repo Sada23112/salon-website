@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { business } from '../config/business';
+import { businessInfo } from '../config/businessInfo';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedSection from './AnimatedSection';
@@ -34,7 +34,7 @@ export default function Services() {
         </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {business.services.map((service, index) => (
+          {businessInfo.services.map((service, index) => (
             <motion.div
               key={index}
               custom={index}

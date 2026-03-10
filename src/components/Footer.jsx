@@ -1,9 +1,10 @@
 import { Instagram, Facebook, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { business } from '../config/business';
+import { businessInfo } from '../config/businessInfo';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const whatsappUrl = `https://wa.me/${businessInfo.social.whatsapp.replace(/[^0-9]/g, '')}`;
 
   return (
     <footer className="bg-dark-bg text-foreground border-t border-foreground/10">
@@ -11,7 +12,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div>
             <h3 className="text-xl font-serif font-bold text-foreground mb-4">
-              {business.businessName}
+              {businessInfo.name}
             </h3>
             <p className="text-foreground/70 leading-relaxed text-sm">
               Experience luxury salon services dedicated to your beauty and confidence
@@ -41,17 +42,23 @@ export default function Footer() {
             <ul className="space-y-4 text-foreground/70 text-sm">
               <li>
                 <a
-                  href={`tel:${business.phone}`}
+                  href={`tel:${businessInfo.contact.phone}`}
                   className="hover:text-accent transition-colors"
                 >
-                  {business.phone}
+                  {businessInfo.contact.phone}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${businessInfo.contact.email}`}
+                  className="hover:text-accent transition-colors"
+                >
+                  {businessInfo.contact.email}
                 </a>
               </li>
               <li>
                 <p className="leading-relaxed">
-                  {business.address}
-                  <br />
-                  {business.city}
+                  {businessInfo.contact.address}
                 </p>
               </li>
             </ul>
@@ -61,7 +68,7 @@ export default function Footer() {
             <h4 className="text-lg font-serif font-semibold text-foreground mb-6">Follow</h4>
             <div className="flex gap-4">
               <a
-                href={business.socialLinks.instagram}
+                href={businessInfo.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground/70 hover:text-accent transition-colors"
@@ -70,7 +77,7 @@ export default function Footer() {
                 <Instagram size={20} />
               </a>
               <a
-                href={business.socialLinks.facebook}
+                href={businessInfo.social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground/70 hover:text-accent transition-colors"
@@ -79,7 +86,7 @@ export default function Footer() {
                 <Facebook size={20} />
               </a>
               <a
-                href={business.socialLinks.whatsapp}
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground/70 hover:text-accent transition-colors"
@@ -93,7 +100,7 @@ export default function Footer() {
 
         <div className="border-t border-foreground/10 pt-8">
           <p className="text-center text-foreground/60 text-xs">
-            &copy; {currentYear} {business.businessName}. All rights reserved.
+            &copy; {currentYear} {businessInfo.name}. All rights reserved.
           </p>
         </div>
       </div>

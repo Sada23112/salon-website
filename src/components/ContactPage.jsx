@@ -1,29 +1,55 @@
 import { useState } from 'react';
 import { MapPin, Clock, Phone, Mail, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { business } from '../config/business';
+import { businessInfo } from '../config/businessInfo';
 import AnimatedSection from './AnimatedSection';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
+    phone: '+91 ',
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const whatsappUrl = `https://wa.me/${businessInfo.social.whatsapp.replace(/[^0-9]/g, '')}`;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === 'phone') {
+      let input = value;
+      if (!input.startsWith('+91')) {
+        input = '+91' + input;
+      }
+      let afterPrefix = input.slice(3);
+      let digits = afterPrefix.replace(/\D/g, '').slice(0, 10);
+      let formatted = '+91';
+      if (digits.length > 0) formatted += ' ' + digits.slice(0, 5);
+      if (digits.length > 5) formatted += ' ' + digits.slice(5);
+
+      setFormData((prev) => ({ ...prev, [name]: formatted }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+    setError('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (formData.phone && formData.phone.trim() !== '+91') {
+      const phoneRegex = /^\+91 [6-9]\d{4} \d{5}$/;
+      if (!phoneRegex.test(formData.phone)) {
+        setError('Please enter a valid Indian mobile number');
+        return;
+      }
+    }
+
     // In a real app, this would send to backend
     console.log('Contact form submitted:', formData);
     setSubmitted(true);
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    setFormData({ name: '', email: '', phone: '+91 ', message: '' });
     setTimeout(() => setSubmitted(false), 5000);
   };
 
@@ -66,6 +92,11 @@ export default function ContactPage() {
           >
             <h2 className="text-2xl font-serif font-bold text-foreground mb-6">Send Us a Message</h2>
 
+            {error && (
+              <div className="mb-6 p-4 rounded-lg bg-red-900/30 text-red-400 border border-red-800">
+                {error}
+              </div>
+            )}
             {submitted && (
               <div className="mb-6 p-4 rounded-lg bg-green-900/30 text-green-400 border border-green-800">
                 Thank you for your message! We'll get back to you soon.
@@ -113,7 +144,7 @@ export default function ContactPage() {
                   value={formData.phone}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-foreground/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent bg-dark-bg text-foreground placeholder:text-foreground/40"
-                  placeholder="(555) 123-4567"
+                  placeholder="+91 98765 43210"
                 />
               </div>
 
@@ -157,12 +188,10 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">Our Location</h3>
                   <p className="text-foreground/70 leading-relaxed text-sm">
-                    {business.address}
-                    <br />
-                    {business.city}
+                    {businessInfo.contact.address}
                   </p>
                   <a
-                    href={`https://maps.google.com/?q=${encodeURIComponent(`${business.address}, ${business.city}`)}`}
+                    href={`https://maps.google.com/?q=${encodeURIComponent(businessInfo.contact.address)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block mt-3 px-4 py-2 bg-accent hover:bg-accent-secondary text-white hover:text-white rounded-lg transition-all font-medium text-xs shadow-md"
@@ -186,10 +215,10 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">Phone</h3>
                   <a
-                    href={`tel:${business.phone}`}
+                    href={`tel:${businessInfo.contact.phone}`}
                     className="text-foreground/70 hover:text-accent transition-colors font-medium text-sm"
                   >
-                    {business.phone}
+                    {businessInfo.contact.phone}
                   </a>
                 </div>
               </div>
@@ -208,10 +237,10 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-3">Business Hours</h3>
                   <div className="space-y-1.5 text-foreground/70 text-sm">
-                    <p><span className="font-semibold text-foreground/80">Mon - Thu:</span> {business.businessHours.monday}</p>
-                    <p><span className="font-semibold text-foreground/80">Friday:</span> {business.businessHours.friday}</p>
-                    <p><span className="font-semibold text-foreground/80">Saturday:</span> {business.businessHours.saturday}</p>
-                    <p><span className="font-semibold text-foreground/80">Sunday:</span> {business.businessHours.sunday}</p>
+                    <p><span className="font-semibold text-foreground/80">Mon - Thu:</span> {businessInfo.hours.monday}</p>
+                    <p><span className="font-semibold text-foreground/80">Friday:</span> {businessInfo.hours.friday}</p>
+                    <p><span className="font-semibold text-foreground/80">Saturday:</span> {businessInfo.hours.saturday}</p>
+                    <p><span className="font-semibold text-foreground/80">Sunday:</span> {businessInfo.hours.sunday}</p>
                   </div>
                 </div>
               </div>
@@ -230,15 +259,15 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">Follow Us</h3>
                   <div className="flex gap-3 mt-2">
-                    <a href={business.socialLinks.instagram} target="_blank" rel="noopener noreferrer"
+                    <a href={businessInfo.social.instagram} target="_blank" rel="noopener noreferrer"
                       className="px-4 py-2 bg-foreground/10 hover:bg-accent text-white hover:text-white rounded-lg transition-all text-xs font-medium">
                       Instagram
                     </a>
-                    <a href={business.socialLinks.facebook} target="_blank" rel="noopener noreferrer"
+                    <a href={businessInfo.social.facebook} target="_blank" rel="noopener noreferrer"
                       className="px-4 py-2 bg-foreground/10 hover:bg-accent text-white hover:text-white rounded-lg transition-all text-xs font-medium">
                       Facebook
                     </a>
-                    <a href={business.socialLinks.whatsapp} target="_blank" rel="noopener noreferrer"
+                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
                       className="px-4 py-2 bg-foreground/10 hover:bg-green-600 text-white hover:text-white rounded-lg transition-all text-xs font-medium">
                       WhatsApp
                     </a>
@@ -258,7 +287,7 @@ export default function ContactPage() {
           className="mt-16 rounded-lg overflow-hidden shadow-lg border border-foreground/10"
         >
           <iframe
-            src={business.googleMapsEmbedUrl}
+            src={businessInfo.googleMapsEmbedUrl}
             width="100%"
             height="400"
             style={{ border: 0 }}

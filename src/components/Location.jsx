@@ -1,6 +1,6 @@
 import { MapPin, Clock, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { business } from '../config/business';
+import { businessInfo } from '../config/businessInfo';
 import AnimatedSection from './AnimatedSection';
 
 export default function Location() {
@@ -48,14 +48,10 @@ export default function Location() {
                     Address
                   </h3>
                   <p className="text-foreground/70 leading-relaxed text-sm">
-                    {business.address}
-                    <br />
-                    {business.city}
+                    {businessInfo.contact.address}
                   </p>
                   <a
-                    href={`https://maps.google.com/?q=${encodeURIComponent(
-                      `${business.address}, ${business.city}`
-                    )}`}
+                    href={`https://maps.google.com/?q=${encodeURIComponent(businessInfo.contact.address)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block mt-4 px-4 py-2 bg-accent hover:bg-accent-secondary text-white hover:text-white rounded-lg transition-all font-medium text-xs shadow-md"
@@ -81,10 +77,10 @@ export default function Location() {
                   </h3>
                   <p className="text-foreground/70 text-sm">
                     <a
-                      href={`tel:${business.phone}`}
+                      href={`tel:${businessInfo.contact.phone}`}
                       className="hover:text-accent transition-colors font-medium"
                     >
-                      {business.phone}
+                      {businessInfo.contact.phone}
                     </a>
                   </p>
                 </div>
@@ -107,19 +103,19 @@ export default function Location() {
                   <div className="space-y-2 text-foreground/70 text-sm">
                     <p>
                       <span className="font-semibold text-foreground/80">Mon - Thu:</span>{' '}
-                      {business.businessHours.monday}
+                      {businessInfo.hours.monday}
                     </p>
                     <p>
                       <span className="font-semibold text-foreground/80">Friday:</span>{' '}
-                      {business.businessHours.friday}
+                      {businessInfo.hours.friday}
                     </p>
                     <p>
                       <span className="font-semibold text-foreground/80">Saturday:</span>{' '}
-                      {business.businessHours.saturday}
+                      {businessInfo.hours.saturday}
                     </p>
                     <p>
                       <span className="font-semibold text-foreground/80">Sunday:</span>{' '}
-                      {business.businessHours.sunday}
+                      {businessInfo.hours.sunday}
                     </p>
                   </div>
                 </div>
@@ -134,7 +130,7 @@ export default function Location() {
             viewport={{ once: true, margin: '-50px' }}
             className="rounded-sm overflow-hidden shadow-lg">
             <iframe
-              src={business.googleMapsEmbedUrl}
+              src={businessInfo.googleMapsEmbedUrl}
               width="100%"
               height="450"
               style={{ border: 0 }}

@@ -1,11 +1,13 @@
 import { MessageCircle, ArrowRight } from 'lucide-react';
-import { business } from '../config/business';
+import { businessInfo } from '../config/businessInfo';
 
 export default function Hero() {
+  const whatsappUrl = `https://wa.me/${businessInfo.social.whatsapp.replace(/[^0-9]/g, '')}`;
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       <img
-        src={business.heroImage}
+        src={businessInfo.heroImage}
         alt="Salon interior"
         className="absolute inset-0 w-full h-full object-cover"
       />
@@ -14,10 +16,10 @@ export default function Hero() {
       <div className="relative z-10 max-w-3xl mx-auto px-4 text-center py-20">
         <p className="text-accent text-xs font-medium tracking-widest uppercase mb-6 letter-spacing-lg">Luxury Excellence</p>
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-bold text-foreground mb-8 leading-tight text-balance">
-          {business.heroHeadline}
+          {businessInfo.heroHeadline}
         </h1>
         <p className="text-lg sm:text-xl text-foreground/80 mb-12 max-w-2xl mx-auto leading-relaxed font-light">
-          {business.heroSubtext}
+          {businessInfo.heroSubtext}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -29,7 +31,7 @@ export default function Hero() {
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </a>
           <a
-            href={business.socialLinks.whatsapp}
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-4 bg-foreground/10 backdrop-blur-lg text-white hover:bg-foreground/20 hover:text-white rounded-lg font-medium flex items-center justify-center gap-2 border border-foreground/30 transition-all"

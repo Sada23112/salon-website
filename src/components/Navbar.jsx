@@ -1,7 +1,7 @@
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { business } from '../config/business';
+import { businessInfo } from '../config/businessInfo';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,6 +32,8 @@ export default function Navbar() {
     }
   };
 
+  const whatsappUrl = `https://wa.me/${businessInfo.social.whatsapp.replace(/[^0-9]/g, '')}`;
+
   return (
     <>
       <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-lg shadow-2xl' : 'bg-background'}`}>
@@ -39,12 +41,12 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center gap-3">
             <img
-              src={business.logoUrl}
-              alt={`${business.businessName} logo`}
+              src={businessInfo.logo}
+              alt={`${businessInfo.name} logo`}
               className="w-12 h-12 rounded-lg object-cover shadow-lg"
             />
             <span className="text-lg font-serif font-bold text-foreground hidden sm:inline">
-              {business.businessName}
+              {businessInfo.name}
             </span>
           </Link>
 
@@ -129,7 +131,7 @@ export default function Navbar() {
             )}
             <div className="px-4 py-3 border-t border-foreground/10">
               <a
-                href={business.socialLinks.whatsapp}
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-2.5 bg-green-500 hover:bg-green-600 text-white hover:text-white rounded-lg font-medium text-sm transition-all w-full justify-center"
@@ -157,7 +159,7 @@ export default function Navbar() {
 
       {/* Floating WhatsApp Button */}
       <a
-        href={business.socialLinks.whatsapp}
+        href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 w-14 h-14 bg-green-500 hover:bg-green-600 text-white hover:text-white rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 z-50"

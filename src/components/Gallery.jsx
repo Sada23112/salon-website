@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { business } from '../config/business';
+import { businessInfo } from '../config/businessInfo';
 import { motion } from 'framer-motion';
 import AnimatedSection from './AnimatedSection';
 
@@ -34,7 +34,7 @@ export default function Gallery() {
         </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {business.galleryImages.map((image, index) => (
+          {businessInfo.galleryImages.map((image, index) => (
             <motion.div
               key={index}
               custom={index}

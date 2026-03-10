@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 import ServicesPage from './components/ServicesPage';
 import GalleryPage from './components/GalleryPage';
 import ContactPage from './components/ContactPage';
-import { business } from './config/business';
+import { businessInfo } from './config/businessInfo';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -36,45 +36,46 @@ function HomePage() {
 
 function App() {
   useEffect(() => {
-    document.title = `${business.businessName} - Premium Salon Services`;
+    document.title = `${businessInfo.name} - Premium Salon Services`;
 
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', `${business.businessName} - Premium salon services including haircuts, styling, coloring, manicures, pedicures, and facial treatments. Book your appointment today.`);
+      metaDescription.setAttribute('content', `${businessInfo.name} - Premium salon services including haircuts, styling, coloring, manicures, pedicures, and facial treatments. Book your appointment today.`);
     }
 
     const ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle) {
-      ogTitle.setAttribute('content', `${business.businessName} - Premium Salon Services`);
+      ogTitle.setAttribute('content', `${businessInfo.name} - Premium Salon Services`);
     }
 
     const ogDescription = document.querySelector('meta[property="og:description"]');
     if (ogDescription) {
-      ogDescription.setAttribute('content', `Experience luxury salon services at ${business.businessName}. Book your transformation today!`);
+      ogDescription.setAttribute('content', `Experience luxury salon services at ${businessInfo.name}. Book your transformation today!`);
     }
 
     const ogImage = document.querySelector('meta[property="og:image"]');
     if (ogImage) {
-      ogImage.setAttribute('content', business.heroImage);
+      ogImage.setAttribute('content', businessInfo.heroImage);
     }
 
     const schemaScript = document.getElementById('local-business-schema');
     if (schemaScript) {
+      const addressParts = businessInfo.contact.address.split(',').map(s => s.trim());
       schemaScript.textContent = JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'LocalBusiness',
-        name: business.businessName,
-        image: business.logoUrl,
-        description: `${business.businessName} - Premium salon services`,
+        name: businessInfo.name,
+        image: businessInfo.logo,
+        description: `${businessInfo.name} - Premium salon services`,
         address: {
           '@type': 'PostalAddress',
-          streetAddress: business.address,
-          addressLocality: business.city.split(',')[0],
-          addressRegion: business.city.split(',')[1]?.trim() || '',
+          streetAddress: addressParts[0] || businessInfo.contact.address,
+          addressLocality: addressParts[1] || '',
+          addressRegion: '',
           postalCode: '',
           addressCountry: 'US',
         },
-        telephone: business.phone,
+        telephone: businessInfo.contact.phone,
         url: window.location.href,
         priceRange: '$$',
         servesCuisine: 'Beauty Services',

@@ -1,7 +1,7 @@
 import { Scissors, Palette, Sparkles, Hand, Flower2, Smile, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { business } from '../config/business';
+import { businessInfo } from '../config/businessInfo';
 import AnimatedSection from './AnimatedSection';
 
 const serviceDetails = [
