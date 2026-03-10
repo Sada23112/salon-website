@@ -1,41 +1,41 @@
 export const businessInfo = {
-  name: "Luxe Beauty Salon",
+  name: "Shree's",
 
   logo: "/logo.png",
 
   heroImage: "https://images.pexels.com/photos/2696063/pexels-photo-2696063.jpeg?auto=compress&cs=tinysrgb&w=1200&h=600",
-  heroHeadline: "Elevate Your Beauty",
-  heroSubtext: "Premium salon services designed to make you feel extraordinary",
+  heroHeadline: "Welcome to Shree's Beauty Salon",
+  heroSubtext: "Professional beauty and salon services designed to help you look and feel your best.",
 
   contact: {
-    phone: "+1 (555) 123-4567",
-    email: "hello@luxebeauty.com",
-    address: "2847 Oak Ridge Drive, San Francisco"
+    phone: "+91 9401483105",
+    email: "contact@shreesalon.com",
+    address: "NN Dutta Rd, Opp. Gurudwara, Nazirpatty, Ambicapatty, Silchar, Assam 788001"
   },
 
   hours: {
-    monday: "9:00 AM – 7:00 PM",
-    tuesday: "9:00 AM – 7:00 PM",
-    wednesday: "9:00 AM – 7:00 PM",
-    thursday: "9:00 AM – 7:00 PM",
-    friday: "9:00 AM – 7:00 PM",
-    saturday: "10:00 AM – 6:00 PM",
-    sunday: "Closed"
+    monday: "9:00 AM – 8:00 PM",
+    tuesday: "9:00 AM – 8:00 PM",
+    wednesday: "9:00 AM – 8:00 PM",
+    thursday: "9:00 AM – 8:00 PM",
+    friday: "9:00 AM – 8:00 PM",
+    saturday: "9:00 AM – 8:00 PM",
+    sunday: "9:00 AM – 6:00 PM"
   },
 
   social: {
-    instagram: "https://instagram.com/salon",
-    facebook: "https://facebook.com/salon",
-    whatsapp: "+15551234567"
+    instagram: "",
+    facebook: "",
+    whatsapp: "+919401483105"
   },
 
   services: [
-    { name: "Hair Cut & Style", price: "$65" },
-    { name: "Hair Coloring", price: "$120" },
-    { name: "Balayage Highlights", price: "$150" },
-    { name: "Manicure", price: "$35" },
-    { name: "Pedicure", price: "$45" },
-    { name: "Facial Treatment", price: "$85" },
+    { name: "Hair Cut & Style", price: "₹300" },
+    { name: "Hair Coloring", price: "₹1200" },
+    { name: "Hair Spa", price: "₹1500" },
+    { name: "Manicure", price: "₹300" },
+    { name: "Pedicure", price: "₹400" },
+    { name: "Facial Treatment", price: "₹800" },
   ],
 
   galleryImages: [
@@ -65,5 +65,5 @@ export const businessInfo = {
     },
   ],
 
-  googleMapsEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019493169471!2d-122.41941592346947!3d37.77492967125732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c6c8f47b1%3A0x640e6ff7ee90b3fb!2s2847%20Oak%20Ridge%20Dr%2C%20San%20Francisco%2C%20CA%2094105!5e0!3m2!1sen!2sus!4v1234567890",
+  googleMapsEmbedUrl: "https://www.google.com/maps?q=24.8230811,92.7985488&output=embed",
 };
